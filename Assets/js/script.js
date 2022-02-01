@@ -38,7 +38,7 @@ function initFunction() {
     var lon;
 
     // Api call to get the city lat/lon
-    fetch('http://api.openweathermap.org/geo/1.0/direct?q=' + cityInput + '&limit=5&appid=' + key)
+    fetch('https://api.openweathermap.org/geo/1.0/direct?q=' + cityInput + '&limit=5&appid=' + key)
     .then(function(resp) { return resp.json() })
     .then(function(data){
         lat = data[0].lat
@@ -70,15 +70,15 @@ function initFunction() {
             uvindex.classList.add("uvindex-low")
           }
 
-          else if (currentUvindex < 5 && currentUvindex >= 3) {
+          else if (currentUvindex < 5.99 && currentUvindex >= 3) {
             uvindex.classList.add("uvindex-mod")
           }
 
-          else if (currentUvindex < 7 && currentUvindex >= 6) {
+          else if (currentUvindex < 7.99 && currentUvindex >= 6) {
             uvindex.classList.add("uvindex-high")
           }
 
-          else if (currentUvindex < 10 && currentUvindex >= 9) {
+          else if (currentUvindex < 10.99 && currentUvindex >= 8) {
             uvindex.classList.add("uvindex-veryhigh")
           }
 
@@ -86,7 +86,7 @@ function initFunction() {
             uvindex.classList.add("uvindex-extreme")
           }
 
-          
+
         })
         .catch(function() {
           // catch any errors
