@@ -16,7 +16,7 @@ var temp = document.getElementById("temp")
 var wind = document.getElementById("wind")
 var humidity = document.getElementById("humidity")
 var uvindex = document.getElementById("uvindex")
-
+var weatherIcon = document.getElementById("weather-icon")
 
 // Assign other variables
 
@@ -24,6 +24,9 @@ var uvindex = document.getElementById("uvindex")
 // Init Function
 // Fetch weather api using user input
 function initFunction() {
+    // Clear weather icon
+    weatherIcon.textContent = ""
+
     // Display the city in the h1 element of the DOM
     var cityInput = document.getElementById("search-input").value
     document.getElementById("current-city").innerHTML = (cityInput + ' ' + moment().format('l'))
@@ -97,7 +100,6 @@ function initFunction() {
           // Append element for curent weather icon
           document.getElementById("weather-icon").appendChild(iconEl)
 
-
         })
         .catch(function() {
           // catch any errors
@@ -126,3 +128,6 @@ console.log("")
 
 // Event listeners
 searchBtn.addEventListener("click", initFunction)
+
+// TO DO !!! NEED HELP !!!
+// Remove appended child???
