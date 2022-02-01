@@ -60,10 +60,10 @@ function initFunction() {
           convertedTemp = Math.round((currentTemp - 273.15) * 9/5 + 32);
 
           // Set current weather to matching elements in the DOM
-          temp.innerHTML = ("Temp: " + convertedTemp + "°F");
-          wind.innerHMTL = ("Wind: " + currentWind + " MPH");
-          humidity.innerHTML = ("Humidity: " + currentHumidity + "%")
-          uvindex.innerHTML = ("UV Index: " + currentUvindex)
+          temp.textContent = ("Temp: " + convertedTemp + "°F");
+          wind.textContent = ("Wind: " + currentWind + " MPH");
+          humidity.textContent = ("Humidity: " + currentHumidity + "%")
+          uvindex.textContent = ("UV Index: " + currentUvindex)
 
           // Sets uvindex colors
           if (currentUvindex <= 2.99) {
