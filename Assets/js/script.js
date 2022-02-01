@@ -31,6 +31,7 @@ function initFunction() {
     document.getElementById("current-city-box").classList.add("current-city-box-css")
     // !!! CAPITILIZE FIRST LETTER !!!
     // Need to do
+    // Add current time and weather icon
 
     var key = 'ab3f923305e165a279695e2d5b7907d5';
     var lat;
@@ -50,21 +51,19 @@ function initFunction() {
           console.log(data)
 
           // Fetching the current weather for the current city
-          var currentTemp = data.current.temp
-          var currentWind = data.current.wind_speed
-          var currentHumidity = data.current.humidity
-          var currentUvindex = data.current.uvi
+          var currentTemp = data.current.temp;
+          var currentWind = data.current.wind_gust;
+          var currentHumidity = data.current.humidity;
+          var currentUvindex = data.current.uvi;
 
-          console.log(currentTemp)
-          console.log(currentWind)
-          console.log(currentHumidity)
-          console.log(currentUvindex)
-
-          // Convert data to normal properties mph, farenheit, etc.
-          convertedTemp = Math.round((currentTemp - 273.15) * 9/5 + 32)
+          // Convert data to other units mph, farenheit, etc.
+          convertedTemp = Math.round((currentTemp - 273.15) * 9/5 + 32);
 
           // Set current weather to matching elements in the DOM
-          temp.innerHTML = ("Temp: " + convertedTemp + "°F")
+          temp.innerHTML = ("Temp: " + convertedTemp + "°F");
+          wind.innerHMTL = ("Wind: " + currentWind + " MPH");
+          humidity.innerHTML = ("Humidity: " + currentHumidity + "%")
+          uvindex.innerHTML = ("UV Index: " + currentUvindex)
 
 
         })
