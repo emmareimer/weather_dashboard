@@ -65,7 +65,28 @@ function initFunction() {
           humidity.innerHTML = ("Humidity: " + currentHumidity + "%")
           uvindex.innerHTML = ("UV Index: " + currentUvindex)
 
+          // Sets uvindex colors
+          if (currentUvindex <= 2.99) {
+            uvindex.classList.add("uvindex-low")
+          }
 
+          else if (currentUvindex < 5 && currentUvindex >= 3) {
+            uvindex.classList.add("uvindex-mod")
+          }
+
+          else if (currentUvindex < 7 && currentUvindex >= 6) {
+            uvindex.classList.add("uvindex-high")
+          }
+
+          else if (currentUvindex < 10 && currentUvindex >= 9) {
+            uvindex.classList.add("uvindex-veryhigh")
+          }
+
+          else if (currentUvindex >= 11) {
+            uvindex.classList.add("uvindex-extreme")
+          }
+
+          
         })
         .catch(function() {
           // catch any errors

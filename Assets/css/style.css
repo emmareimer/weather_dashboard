@@ -33,7 +33,6 @@
     margin: 10px;
 }
 
-
 .current-city-box-css {
     border: solid black 1px;
     margin: 10px;
@@ -41,4 +40,34 @@
 
 #forecast {
     margin: 10px;
+}
+
+.uvindex-low {
+    background-color: green;
+    color: white;
+    border: 1px solid green;
+}
+
+.uvindex-mod {
+    background-color: yellow;
+    color: white;
+    border: 1px solid yellow;
+}
+
+.uvindex-high {
+    background-color: orange;
+    color: white;
+    border: 1px solid orange;
+}
+
+.uvindex-veryhigh {
+    background-color: red;
+    color: white;
+    border: 1px solid red;
+}
+
+.uvindex-extreme {
+    background-color: purple;
+    color: white;
+    border: 1px solid purple;
 }
