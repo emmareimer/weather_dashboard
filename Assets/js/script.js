@@ -26,12 +26,13 @@ var uvindex = document.getElementById("uvindex")
 function initFunction() {
     // Display the city in the h1 element of the DOM
     var cityInput = document.getElementById("search-input").value
-    document.getElementById("current-city").innerHTML = cityInput
+    document.getElementById("current-city").innerHTML = (cityInput + ' ' + moment().format('l'))
+
     // Adds styling to the current city box
     document.getElementById("current-city-box").classList.add("current-city-box-css")
-    // !!! CAPITILIZE FIRST LETTER !!!
-    // Need to do
-    // Add current time and weather icon
+     // Need to do
+    // !!! CAPITILIZE FIRST LETTER !!! splice??
+    // Add current time and weather icon -- connect momentjs
 
     var key = 'ab3f923305e165a279695e2d5b7907d5';
     var lat;
@@ -86,6 +87,16 @@ function initFunction() {
             uvindex.classList.add("uvindex-extreme")
           }
 
+          // Create element for current weather icon
+          var iconEl = document.createElement('img')
+
+          // Sets current weather icon 
+          var icon = data.current.weather[0].icon
+          iconEl.src = 'https://openweathermap.org/img/w/' + icon + '.png'
+
+          // Append element for curent weather icon
+          document.getElementById("weather-icon").appendChild(iconEl)
+
 
         })
         .catch(function() {
@@ -108,6 +119,9 @@ console.log("")
 
 // Connect search history buttons to weather api in order to fetch the current weather and 5-day forecast for those cities
 // Event.target? 
+
+
+// Enter key event to call init function
 
 
 // Event listeners

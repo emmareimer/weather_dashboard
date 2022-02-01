@@ -35,7 +35,7 @@
 
 .current-city-box-css {
     border: solid black 1px;
-    margin: 10px;
+    margin: 20px 20px 15px 10px;
 }
 
 #forecast {
@@ -70,4 +70,9 @@
     background-color: purple;
     color: white;
     border: 1px solid purple;
+}
+
+.forecast-cols {
+    background-color: #13547a;
+    color: white;
 }
