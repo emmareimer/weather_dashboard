@@ -1,10 +1,6 @@
 // GIVEN a weather dashboard with form inputs
 // WHEN I search for a city
 // THEN I am presented with current and future conditions for that city and that city is added to the search history
-// WHEN I view current weather conditions for that city
-// THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
-// WHEN I view the UV index
-// THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
 // WHEN I view future weather conditions for that city
 // THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
 // WHEN I click on a city in the search history
@@ -17,6 +13,7 @@ var wind = document.getElementById("wind")
 var humidity = document.getElementById("humidity")
 var uvindex = document.getElementById("uvindex")
 var weatherIcon = document.getElementById("weather-icon")
+var fiveDayForecast = document.getElementById("five-day-forecast-h2")
 
 // Assign other variables
 
@@ -31,11 +28,15 @@ function initFunction() {
     var cityInput = document.getElementById("search-input").value
     document.getElementById("current-city").innerHTML = (cityInput + ' ' + moment().format('l'))
 
+    // TODO: Create empty array to push city input to 
+    // TODO: Save data and city to local storage !!!!!!!!
+    if (cityInput) {
+      localStorage.setItem('city', JSON.stringify(cityInput))
+    }
+
     // Adds styling to the current city box
     document.getElementById("current-city-box").classList.add("current-city-box-css")
-     // Need to do
-    // !!! CAPITILIZE FIRST LETTER !!! splice??
-    // Add current time and weather icon -- connect momentjs
+    // TODO: CAPITILIZE FIRST LETTER !!! splice??
 
     var key = 'ab3f923305e165a279695e2d5b7907d5';
     var lat;
@@ -66,8 +67,15 @@ function initFunction() {
           // Set current weather to matching elements in the DOM
           temp.textContent = ("Temp: " + convertedTemp + "°F");
           wind.textContent = ("Wind: " + currentWind + " MPH");
-          humidity.textContent = ("Humidity: " + currentHumidity + "%")
-          uvindex.textContent = ("UV Index: " + currentUvindex)
+          humidity.textContent = ("Humidity: " + currentHumidity + "%");
+          uvindex.textContent = ("UV Index: " + currentUvindex);
+        
+          // 5-day forecast -> DOM
+          fiveDayForecast.textContent = "5-Day Forecast";
+
+          // For loops to iterate through the forecast elements in the DOM
+
+
 
           // Sets uvindex colors
           if (currentUvindex <= 2.99) {
@@ -104,30 +112,29 @@ function initFunction() {
         .catch(function() {
           // catch any errors
         });
-    saveCity();   
+    getCity();   
     });
   }
 
-// Store user input to local storage
-function saveCity() {
+// Get search history from local storage
+function getCity() {
 console.log("")
 };
-
-// Get user input from local storage and add to the dom as a button under the search bar
-
-
-// Populate 5-day forecast for current city
 
 
 // Connect search history buttons to weather api in order to fetch the current weather and 5-day forecast for those cities
 // Event.target? 
 
 
-// Enter key event to call init function
 
+// Execute init function when the user releases enter key on the keyboard
+var input = document.getElementById("search-input");
+input.addEventListener("keyup", function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        searchBtn.click();
+    }
+});
 
 // Event listeners
 searchBtn.addEventListener("click", initFunction)
-
-// TO DO !!! NEED HELP !!!
-// Remove appended child???

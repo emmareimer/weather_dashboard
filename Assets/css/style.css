@@ -75,4 +75,7 @@
 .forecast-cols {
     background-color: #13547a;
     color: white;
+    border: 5px solid #13547a;
+    padding: 25px;
+    margin: 20px;
 }
