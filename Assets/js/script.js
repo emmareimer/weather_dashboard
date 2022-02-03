@@ -7,7 +7,7 @@
 // THEN I am again presented with current and future conditions for that city
 
 // Assign DOM variables
-var searchBtn = document.getElementById("search-btn")
+var searchBtn = document.querySelector(".search-btn")
 var temp = document.getElementById("temp")
 var wind = document.getElementById("wind")
 var humidity = document.getElementById("humidity")
@@ -16,34 +16,42 @@ var weatherIcon = document.getElementById("weather-icon")
 var fiveDayForecast = document.getElementById("five-day-forecast-h2")
 
 // Assign other variables
-
+var cities = []
 
 // Init Function
 // Fetch weather api using user input
-function initFunction() {
+function initFunction(savedSearch) {
     // Clear weather icon
     weatherIcon.textContent = ""
 
+
     // Display the city in the h1 element of the DOM
     var cityInput = document.getElementById("search-input").value
-    document.getElementById("current-city").innerHTML = (cityInput + ' ' + moment().format('l'))
+
+    var searchedCity = cityInput ? cityInput : savedSearch; 
+
+    document.getElementById("current-city").innerHTML = (searchedCity + ' ' + moment().format('l'))
 
     // TODO: Create empty array to push city input to 
-    // TODO: Save data and city to local storage !!!!!!!!
-    if (cityInput) {
-      localStorage.setItem('city', JSON.stringify(cityInput))
+    // TODO: Save data and city to local storage !!!!!!!
+
+    if (cityInput && !cities.includes(cityInput)) {
+      cities.push(cityInput)
+      localStorage.setItem('cities', cities.join(';'));
     }
 
     // Adds styling to the current city box
     document.getElementById("current-city-box").classList.add("current-city-box-css")
     // TODO: CAPITILIZE FIRST LETTER !!! splice??
 
+  
+
     var key = 'ab3f923305e165a279695e2d5b7907d5';
     var lat;
     var lon;
 
     // Api call to get the city lat/lon
-    fetch('https://api.openweathermap.org/geo/1.0/direct?q=' + cityInput + '&limit=5&appid=' + key)
+    fetch('https://api.openweathermap.org/geo/1.0/direct?q=' + searchedCity + '&limit=5&appid=' + key)
     .then(function(resp) { return resp.json() })
     .then(function(data){
         lat = data[0].lat
@@ -74,8 +82,25 @@ function initFunction() {
           fiveDayForecast.textContent = "5-Day Forecast";
 
           // For loops to iterate through the forecast elements in the DOM
+          for (let i = 0; i < 5; i++) {
+            var element = data.daily[i];
+            // Sets forecast dates
+            var forecastDate = document.querySelectorAll(".forecast-date")[i];
+            forecastDate.textContent = moment().add(i + 1, 'day').format('l');
+
+            // Set icon
+            var forecastIcon = document.querySelectorAll(".icon")[i];
+             forecastIcon.src = 'https://openweathermap.org/img/w/' + data.current.weather[0].icon + '.png';
+
+            // Sets forecast temps
+            var forecastTemp = document.querySelectorAll(".forecast-temp")[i];
+            forecastTemp.textContent = ("Temp: " + Math.round((element.temp.day - 273.15) * 9/5 + 32) + "°F");
+            // TODO: code for wind & humidity 
 
 
+            // Sets class list for cols
+            document.querySelectorAll("#forecast > .col-2")[i].classList.add("forecast-cols")
+          }
 
           // Sets uvindex colors
           if (currentUvindex <= 2.99) {
@@ -107,25 +132,36 @@ function initFunction() {
 
           // Append element for curent weather icon
           document.getElementById("weather-icon").appendChild(iconEl)
-
+          document.getElementById("search-input").value = ""
+          getCity();
         })
         .catch(function() {
           // catch any errors
         });
-    getCity();   
-    });
+      });
+    }
+    
+    // Get search history from local storage
+    function getCity() {
+    document.getElementById("search-history").innerHTML = ""
+    cities = localStorage.getItem("cities") ? localStorage.getItem("cities").split(";") : []
+  
+  //for loop to render cities to created button elements
+  for (let i = 0; i < cities.length; i++) {
+    var city = cities[i];
+    var cityButton = document.createElement("button")
+    cityButton.textContent = city
+
+    // Add event listener to the search history buttons and change the text content of input to be empty upon clicking the button
+    cityButton.addEventListener('click', function(event) {
+      document.getElementById("search-input").value = ""
+      initFunction(event.target.textContent)
+    })
+
+    document.getElementById("search-history").appendChild(cityButton)
+    cityButton.classList.add("search-btn")
   }
-
-// Get search history from local storage
-function getCity() {
-console.log("")
 };
-
-
-// Connect search history buttons to weather api in order to fetch the current weather and 5-day forecast for those cities
-// Event.target? 
-
-
 
 // Execute init function when the user releases enter key on the keyboard
 var input = document.getElementById("search-input");
@@ -138,3 +174,4 @@ input.addEventListener("keyup", function(event) {
 
 // Event listeners
 searchBtn.addEventListener("click", initFunction)
+getCity();   
