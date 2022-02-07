@@ -18,6 +18,10 @@ var cities = []
 function initFunction(savedSearch) {
     // Clear weather icon
     weatherIcon.textContent = ""
+    currentUvindex = ""
+    currentHumidity = ""
+    currentTemp = ""
+    currentWind = ""
 
     // Display the city in the h1 element of the DOM
     var cityInput = document.getElementById("search-input").value;
@@ -102,7 +106,6 @@ function initFunction(savedSearch) {
             // Sets forecast humidity
             var forecastHumidity = document.querySelectorAll(".forecast-humidity")[i];
             forecastHumidity.textContent = ("Humidity: " + element.humidity + "%")
-
 
             // Sets class list for cols
             document.querySelectorAll("#forecast > .col-2")[i].classList.add("forecast-cols")
