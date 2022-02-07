@@ -1,10 +1,5 @@
-// GIVEN a weather dashboard with form inputs
-// WHEN I search for a city
-// THEN I am presented with current and future conditions for that city and that city is added to the search history
 // WHEN I view future weather conditions for that city
 // THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
-// WHEN I click on a city in the search history
-// THEN I am again presented with current and future conditions for that city
 
 // Assign DOM variables
 var searchBtn = document.querySelector(".search-btn")
@@ -24,17 +19,16 @@ function initFunction(savedSearch) {
     // Clear weather icon
     weatherIcon.textContent = ""
 
-
     // Display the city in the h1 element of the DOM
-    var cityInput = document.getElementById("search-input").value
+    var cityInput = document.getElementById("search-input").value;
 
     var searchedCity = cityInput ? cityInput : savedSearch; 
 
+    // TODO: CAPITILIZE FIRST LETTER !!! splice??
+
     document.getElementById("current-city").innerHTML = (searchedCity + ' ' + moment().format('l'))
 
-    // TODO: Create empty array to push city input to 
-    // TODO: Save data and city to local storage !!!!!!!
-
+    // Push input to empty array and save data and city to local storage
     if (cityInput && !cities.includes(cityInput)) {
       cities.push(cityInput)
       localStorage.setItem('cities', cities.join(';'));
@@ -42,9 +36,6 @@ function initFunction(savedSearch) {
 
     // Adds styling to the current city box
     document.getElementById("current-city-box").classList.add("current-city-box-css")
-    // TODO: CAPITILIZE FIRST LETTER !!! splice??
-
-  
 
     var key = 'ab3f923305e165a279695e2d5b7907d5';
     var lat;
@@ -56,6 +47,14 @@ function initFunction(savedSearch) {
     .then(function(data){
         lat = data[0].lat
         lon = data[0].lon
+
+        // // If user makes an invalid entry, alert and return
+        // if (Response.status !== 200){
+        //   alert ("Please enter a valid city name.")
+        //   document.getElementById("search-input").value = ""
+        //   document.getElementById("current-city").textContent = ""
+        //   return;
+        // }
 
         // Api call to get the weather data for the city
         fetch('https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&exclude=hourly,minutely,alerts&appid=' + key)  
@@ -90,12 +89,19 @@ function initFunction(savedSearch) {
 
             // Set icon
             var forecastIcon = document.querySelectorAll(".icon")[i];
-             forecastIcon.src = 'https://openweathermap.org/img/w/' + data.current.weather[0].icon + '.png';
+             forecastIcon.src = 'https://openweathermap.org/img/w/' + element.weather[0].icon + '.png';
 
             // Sets forecast temps
             var forecastTemp = document.querySelectorAll(".forecast-temp")[i];
             forecastTemp.textContent = ("Temp: " + Math.round((element.temp.day - 273.15) * 9/5 + 32) + "°F");
             // TODO: code for wind & humidity 
+            // Sets forecast wind
+            var forecastWind = document.querySelectorAll(".forecast-wind")[i];
+            forecastWind.textContent = ("Wind: " + element.wind_gust + " MPH")
+
+            // Sets forecast humidity
+            var forecastHumidity = document.querySelectorAll(".forecast-humidity")[i];
+            forecastHumidity.textContent = ("Humidity: " + element.humidity + "%")
 
 
             // Sets class list for cols
